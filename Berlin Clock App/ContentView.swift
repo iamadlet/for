@@ -25,20 +25,18 @@ struct ContentView: View {
             if seconds == 60 {
                 seconds = 0
                 minutes += 1
-                
-                if minutes == 60 {
-                    minutes = 0
-                    hours += 1
-                        
-                    if hours == 24 {
-                        hours = 0
-                            
-                        if let newDate = Calendar.current.date(bySettingHour: hours, minute: minutes, second: seconds, of: timePicker) {
-                            timePicker = newDate
-                        }
-                    }
-                }
             }
+            if minutes == 60 {
+                minutes = 0
+                hours += 1
+            }
+            if hours == 24 {
+                hours = 0
+            }
+            if let newDate = Calendar.current.date(bySettingHour: hours, minute: minutes, second: seconds, of: timePicker) {
+                timePicker = newDate
+            }
+               
             
             let berlinClock = BerlinClock()
             normalClock = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
@@ -66,6 +64,7 @@ struct ContentView: View {
                     VStack(spacing: 16) {
                         if (berlinDate.count > 0) {
                             SecondsBlock(berlin: berlinDate)
+                                .padding(.top, 24)
                             FiveHourBlock(berlin: berlinDate)
                             OneHourBlock(berlin: berlinDate)
                             FiveMinuteBlock(berlin: berlinDate)
